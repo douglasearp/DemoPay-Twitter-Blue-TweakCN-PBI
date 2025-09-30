@@ -1,0 +1,24 @@
+<svg width="180" height="50" viewBox="0 0 180 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- PayOnward Text with italic styling and glow -->
+  <text x="10" y="32" font-family="Arial, sans-serif" font-size="22" font-style="italic" font-weight="bold" fill="white" filter="url(#glow)">
+    PayOnward
+  </text>
+  
+  <!-- Double Chevron Icon with layered effect -->
+  <g transform="translate(140, 15)">
+    <!-- First chevron (lighter, more translucent) -->
+    <path d="M0 8 L12 0 L12 4 L4 8 L12 12 L12 16 Z" fill="white" opacity="0.6" filter="url(#glow)"/>
+    <!-- Second chevron (brighter, more solid) -->
+    <path d="M4 8 L16 0 L16 4 L8 8 L16 12 L16 16 Z" fill="white" opacity="0.9" filter="url(#glow)"/>
+  </g>
+</svg>
