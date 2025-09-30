@@ -47,6 +47,7 @@ docker build -f Dockerfile.prod -t demopay-prod .
 docker run -p 80:80 demopay-prod
 ```
 
+
 ## 🏗️ Docker Configuration
 
 ### Files Overview
