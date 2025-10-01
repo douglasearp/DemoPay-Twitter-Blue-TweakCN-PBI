@@ -1,0 +1,13 @@
+name = "pay"
+
+# Using Cloudflare Pages (Static Site)
+pages_build_output_dir = "dist"
+
+[vars]
+# Add any runtime environment variables here (not required for static)
+
+# Uncomment below if you later add a Worker or Functions
+#[site]
+#bucket = "dist"
+#entry-point = "functions"
+
