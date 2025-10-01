@@ -7,10 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "cf:login": "wrangler login",
-    "cf:dev": "wrangler pages dev dist",
-    "cf:deploy": "wrangler pages deploy dist --project-name pay"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
