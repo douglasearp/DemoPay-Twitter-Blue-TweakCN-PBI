@@ -255,11 +255,6 @@ const Invoices: React.FC<InvoicesProps> = ({ onViewActivity }) => {
               >
                 Apply to All Eligible
               </button>
-              <button
-                className={`px-3 py-2 text-sm font-medium text-white rounded-lg transition-colors duration-200 ${getButtonColor(suggestion.color)}`}
-              >
-                **Apply Suggestion
-              </button>
             </div>
           </div>
         ))}
