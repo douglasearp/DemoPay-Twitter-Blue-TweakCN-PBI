@@ -197,7 +197,7 @@ const Invoices: React.FC<InvoicesProps> = ({ onViewActivity }) => {
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Invoices Receivable</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Invoices</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-2">Manage your accounts receivable</p>
         </div>
         <div className="mt-4 sm:mt-0 flex space-x-3">
