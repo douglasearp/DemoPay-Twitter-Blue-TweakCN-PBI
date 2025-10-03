@@ -19,6 +19,7 @@ const Invoices: React.FC<InvoicesProps> = ({ onViewActivity }) => {
   const [invoices, setInvoices] = useState(mockInvoices);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [sendingInvoice, setSendingInvoice] = useState<Invoice | null>(null);
+  const [appliedSuggestions, setAppliedSuggestions] = useState<Record<string, boolean>>({});
 
   // AI Suggestion data
   const aiSuggestions = [
@@ -155,6 +156,26 @@ const Invoices: React.FC<InvoicesProps> = ({ onViewActivity }) => {
     setSendingInvoice(null);
   };
 
+  const handleApplyToAll = (suggestionColor: string) => {
+    const updatedApplied = { ...appliedSuggestions };
+    
+    // Find all invoices with matching suggestion color and mark them as applied
+    enhancedInvoices.forEach(invoice => {
+      if (invoice.suggestionColor === suggestionColor) {
+        updatedApplied[invoice.id] = true;
+      }
+    });
+    
+    setAppliedSuggestions(updatedApplied);
+  };
+
+  const handleIndividualCheckbox = (invoiceId: string, checked: boolean) => {
+    setAppliedSuggestions(prev => ({
+      ...prev,
+      [invoiceId]: checked
+    }));
+  };
+
   const getStatusPillColor = (status: string) => {
     switch (status.toLowerCase()) {
       case 'pending':
@@ -228,14 +249,17 @@ const Invoices: React.FC<InvoicesProps> = ({ onViewActivity }) => {
               {suggestion.description}
             </p>
             <div className="flex space-x-2">
-              {suggestion.buttons.map((button, index) => (
-                <button
-                  key={index}
-                  className={`px-3 py-2 text-sm font-medium text-white rounded-lg transition-colors duration-200 ${getButtonColor(suggestion.color)}`}
-                >
-                  {button}
-                </button>
-              ))}
+              <button
+                onClick={() => handleApplyToAll(suggestion.color)}
+                className={`px-3 py-2 text-sm font-medium text-white rounded-lg transition-colors duration-200 ${getButtonColor(suggestion.color)}`}
+              >
+                Apply to All Eligible
+              </button>
+              <button
+                className={`px-3 py-2 text-sm font-medium text-white rounded-lg transition-colors duration-200 ${getButtonColor(suggestion.color)}`}
+              >
+                **Apply Suggestion
+              </button>
             </div>
           </div>
         ))}
@@ -289,6 +313,9 @@ const Invoices: React.FC<InvoicesProps> = ({ onViewActivity }) => {
                   AI SUGGESTION
                 </th>
                 <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: '#4285F4' }}>
+                  APPLIED
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: '#4285F4' }}>
                   ACTIONS
                 </th>
               </tr>
@@ -335,6 +362,14 @@ const Invoices: React.FC<InvoicesProps> = ({ onViewActivity }) => {
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getAISuggestionPillColor(invoice.suggestionColor)}`}>
                       {invoice.aiSuggestion}
                     </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <input
+                      type="checkbox"
+                      checked={appliedSuggestions[invoice.id] || false}
+                      onChange={(e) => handleIndividualCheckbox(invoice.id, e.target.checked)}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                    />
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center space-x-3">
