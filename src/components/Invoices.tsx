@@ -228,7 +228,7 @@ const Invoices: React.FC<InvoicesProps> = ({ onViewActivity }) => {
             style={{ backgroundColor: '#4285F4' }}
           >
             <Plus className="w-4 h-4 mr-2" />
-            + New Invoice
+            New Invoice
           </button>
         </div>
       </div>
