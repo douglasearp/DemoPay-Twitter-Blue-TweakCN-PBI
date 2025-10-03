@@ -168,7 +168,7 @@ const Dashboard: React.FC = () => {
         <div className="xl:col-span-2 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-[#4285F4]/20 dark:border-[#4285F4]/30 hover:shadow-xl transition-all duration-300">
           <div className="p-6 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Collection Trend</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Receivables Trend</h3>
               <button className="flex items-center px-3 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
                 30 Days
                 <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -206,14 +206,14 @@ const Dashboard: React.FC = () => {
                     <path
                       d="M 0,180 L 60,160 L 120,140 L 180,160 L 240,150 L 300,120 L 360,80 L 400,60 L 400,200 L 0,200 Z"
                       fill="#0047AB"
-                      fillOpacity="0.3"
+                      fillOpacity="0.4"
                     />
                     
                     {/* Collected area (lighter blue, on top) */}
                     <path
                       d="M 0,160 L 60,140 L 120,150 L 180,120 L 240,130 L 300,110 L 360,100 L 400,90 L 400,200 L 0,200 Z"
                       fill="#4285F4"
-                      fillOpacity="0.4"
+                      fillOpacity="0.6"
                     />
                     
                     {/* Collected line */}
@@ -270,60 +270,60 @@ const Dashboard: React.FC = () => {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <div className="w-3 h-3 bg-[#4285F4] rounded-full mr-3"></div>
+                  <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
                   <span className="text-sm font-medium text-gray-900 dark:text-white min-w-[80px]">Current</span>
                 </div>
                 <div className="flex-1 mx-4">
                   <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div className="bg-[#4285F4] h-2 rounded-full" style={{ width: '100%' }}></div>
+                    <div className="bg-green-500 h-2 rounded-full" style={{ width: '100%' }}></div>
                   </div>
                 </div>
                 <span className="text-sm font-semibold text-gray-900 dark:text-white">$589k</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <div className="w-3 h-3 bg-[#4285F4] rounded-full mr-3 opacity-80"></div>
+                  <div className="w-3 h-3 bg-yellow-500 rounded-full mr-3"></div>
                   <span className="text-sm font-medium text-gray-900 dark:text-white min-w-[80px]">1-30 days</span>
                 </div>
                 <div className="flex-1 mx-4">
                   <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div className="bg-[#4285F4] h-2 rounded-full opacity-80" style={{ width: '52%' }}></div>
+                    <div className="bg-yellow-500 h-2 rounded-full" style={{ width: '52%' }}></div>
                   </div>
                 </div>
                 <span className="text-sm font-semibold text-gray-900 dark:text-white">$308k</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <div className="w-3 h-3 bg-[#4285F4] rounded-full mr-3 opacity-60"></div>
+                  <div className="w-3 h-3 bg-yellow-500 rounded-full mr-3"></div>
                   <span className="text-sm font-medium text-gray-900 dark:text-white min-w-[80px]">31-60 days</span>
                 </div>
                 <div className="flex-1 mx-4">
                   <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div className="bg-[#4285F4] h-2 rounded-full opacity-60" style={{ width: '33%' }}></div>
+                    <div className="bg-yellow-500 h-2 rounded-full" style={{ width: '33%' }}></div>
                   </div>
                 </div>
                 <span className="text-sm font-semibold text-gray-900 dark:text-white">$192k</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <div className="w-3 h-3 bg-[#4285F4] rounded-full mr-3 opacity-40"></div>
+                  <div className="w-3 h-3 bg-red-500 rounded-full mr-3"></div>
                   <span className="text-sm font-medium text-gray-900 dark:text-white min-w-[80px]">61-90 days</span>
                 </div>
                 <div className="flex-1 mx-4">
                   <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div className="bg-[#4285F4] h-2 rounded-full opacity-40" style={{ width: '20%' }}></div>
+                    <div className="bg-red-500 h-2 rounded-full" style={{ width: '20%' }}></div>
                   </div>
                 </div>
                 <span className="text-sm font-semibold text-gray-900 dark:text-white">$115k</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <div className="w-3 h-3 bg-[#4285F4] rounded-full mr-3 opacity-20"></div>
+                  <div className="w-3 h-3 bg-red-500 rounded-full mr-3"></div>
                   <span className="text-sm font-medium text-gray-900 dark:text-white min-w-[80px]">90+ days</span>
                 </div>
                 <div className="flex-1 mx-4">
                   <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div className="bg-[#4285F4] h-2 rounded-full opacity-20" style={{ width: '13%' }}></div>
+                    <div className="bg-red-500 h-2 rounded-full" style={{ width: '13%' }}></div>
                   </div>
                 </div>
                 <span className="text-sm font-semibold text-gray-900 dark:text-white">$76k</span>
@@ -335,7 +335,7 @@ const Dashboard: React.FC = () => {
         {/* Today's Collections */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-[#4285F4]/20 dark:border-[#4285F4]/30 hover:shadow-xl transition-all duration-300">
           <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Today's Collections</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Today's Receivables</h3>
           </div>
           <div className="p-6">
             {/* Circular Progress */}
