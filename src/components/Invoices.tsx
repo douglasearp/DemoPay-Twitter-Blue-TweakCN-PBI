@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Plus, Eye, ChevronDown, Edit, Send, Calendar, Repeat } from 'lucide-react';
+import { Search, Plus, ChevronDown, Edit, Send, Calendar, Repeat } from 'lucide-react';
 import { mockInvoices } from '../data/mockData';
 import StatusBadge from './StatusBadge';
 import InvoiceModal from './InvoiceModal';
@@ -201,10 +201,6 @@ const Invoices: React.FC<InvoicesProps> = ({ onViewActivity }) => {
           <p className="text-gray-600 dark:text-gray-400 mt-2">Manage your accounts receivable</p>
         </div>
         <div className="mt-4 sm:mt-0 flex space-x-3">
-          <button className="flex items-center px-4 py-2 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md" style={{ backgroundColor: '#4285F4' + '20', color: '#4285F4' }}>
-            <Eye className="w-4 h-4 mr-2" />
-            Detailed Invoice
-          </button>
           <button 
             onClick={handleNewInvoice}
             className="flex items-center px-4 py-2 text-white rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
