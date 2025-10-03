@@ -313,7 +313,7 @@ const Invoices: React.FC<InvoicesProps> = ({ onViewActivity }) => {
                   AI SUGGESTION
                 </th>
                 <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: '#4285F4' }}>
-                  APPLIED
+                  AI APPLIED
                 </th>
                 <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: '#4285F4' }}>
                   ACTIONS
