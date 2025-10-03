@@ -20,7 +20,59 @@ const Invoices: React.FC<InvoicesProps> = ({ onViewActivity }) => {
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [sendingInvoice, setSendingInvoice] = useState<Invoice | null>(null);
 
-  const filteredInvoices = mockInvoices
+  // AI Suggestion data
+  const aiSuggestions = [
+    {
+      id: 'early-payment',
+      title: 'Early Payment Discount',
+      description: '3 invoices eligible for AI-suggested 2% discount for payment within 10 days. Customer history shows strong uptake on discounts and positive cash flow indicators.',
+      confidence: '90% confidence',
+      color: 'green',
+      buttons: ['Apply to All Eligible', '**Apply Suggestion']
+    },
+    {
+      id: 'payment-plan',
+      title: 'Payment Plan Option',
+      description: '1 invoice eligible for AI-suggested 3-month payment plan with 1% fee. Large invoice amounts may benefit from structured payment schedule to improve collection rate.',
+      confidence: '80% confidence',
+      color: 'blue',
+      buttons: ['Apply to All Eligible', '**Apply Suggestion']
+    },
+    {
+      id: 'priority-call',
+      title: 'Priority Agent Call',
+      description: '1 invoice eligible for AI-suggested immediate call due to overdue status. Invoice is significantly overdue and customer has multiple outstanding invoices indicating potential issues.',
+      confidence: '95% confidence',
+      color: 'purple',
+      buttons: ['Apply to All Eligible', '**Apply Suggestion']
+    }
+  ];
+
+  // Enhanced invoice data with AI suggestions
+  const enhancedInvoices = mockInvoices.map((invoice, index) => {
+    let aiSuggestion = '';
+    let suggestionColor = '';
+    
+    // Assign AI suggestions based on invoice data
+    if (invoice.status === 'overdue') {
+      aiSuggestion = 'Priority Agent Call';
+      suggestionColor = 'purple';
+    } else if (invoice.amount > 20000) {
+      aiSuggestion = '3-Month Plan 1% Fee';
+      suggestionColor = 'blue';
+    } else {
+      aiSuggestion = 'Early Payment 2%';
+      suggestionColor = 'green';
+    }
+    
+    return {
+      ...invoice,
+      aiSuggestion,
+      suggestionColor
+    };
+  });
+
+  const filteredInvoices = enhancedInvoices
     .filter(invoice => 
       invoice.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       invoice.invoiceNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -103,11 +155,49 @@ const Invoices: React.FC<InvoicesProps> = ({ onViewActivity }) => {
     setSendingInvoice(null);
   };
 
+  const getStatusPillColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'overdue':
+        return 'bg-red-100 text-red-800 border-red-200';
+      default:
+        return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
+
+  const getAISuggestionPillColor = (color: string) => {
+    switch (color) {
+      case 'green':
+        return 'bg-green-100 text-green-800 border-green-200';
+      case 'blue':
+        return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'purple':
+        return 'bg-purple-100 text-purple-800 border-purple-200';
+      default:
+        return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
+
+  const getButtonColor = (color: string) => {
+    switch (color) {
+      case 'green':
+        return 'bg-green-600 hover:bg-green-700';
+      case 'blue':
+        return 'bg-blue-600 hover:bg-blue-700';
+      case 'purple':
+        return 'bg-purple-600 hover:bg-purple-700';
+      default:
+        return 'bg-gray-600 hover:bg-gray-700';
+    }
+  };
+
   return (
     <div className="p-8">
+      {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Invoices</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Invoices Receivable</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-2">Manage your accounts receivable</p>
         </div>
         <div className="mt-4 sm:mt-0 flex space-x-3">
@@ -121,9 +211,38 @@ const Invoices: React.FC<InvoicesProps> = ({ onViewActivity }) => {
             style={{ backgroundColor: '#4285F4' }}
           >
             <Plus className="w-4 h-4 mr-2" />
-            New Invoice
+            + New Invoice
           </button>
         </div>
+      </div>
+
+      {/* AI Suggestion Boxes */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        {aiSuggestions.map((suggestion) => (
+          <div key={suggestion.id} className={`rounded-xl p-6 shadow-lg border-2 ${suggestion.color === 'green' ? 'bg-green-50 border-green-200' : suggestion.color === 'blue' ? 'bg-blue-50 border-blue-200' : 'bg-purple-50 border-purple-200'}`}>
+            <div className="flex justify-between items-start mb-4">
+              <h3 className={`text-lg font-semibold ${suggestion.color === 'green' ? 'text-green-800' : suggestion.color === 'blue' ? 'text-blue-800' : 'text-purple-800'}`}>
+                {suggestion.title}
+              </h3>
+              <span className={`text-sm font-medium px-2 py-1 rounded-full ${suggestion.color === 'green' ? 'bg-green-100 text-green-700' : suggestion.color === 'blue' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700'}`}>
+                {suggestion.confidence}
+              </span>
+            </div>
+            <p className={`text-sm mb-4 ${suggestion.color === 'green' ? 'text-green-700' : suggestion.color === 'blue' ? 'text-blue-700' : 'text-purple-700'}`}>
+              {suggestion.description}
+            </p>
+            <div className="flex space-x-2">
+              {suggestion.buttons.map((button, index) => (
+                <button
+                  key={index}
+                  className={`px-3 py-2 text-sm font-medium text-white rounded-lg transition-colors duration-200 ${getButtonColor(suggestion.color)}`}
+                >
+                  {button}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Search Bar */}
@@ -148,13 +267,13 @@ const Invoices: React.FC<InvoicesProps> = ({ onViewActivity }) => {
             <thead style={{ backgroundColor: '#4285F4' + '10' }}>
               <tr>
                 {[
-                  { key: 'invoiceNumber', label: 'Invoice Number' },
-                  { key: 'companyName', label: 'Company Name' },
-                  { key: 'contactName', label: 'Contact Name' },
-                  { key: 'date', label: 'Date' },
-                  { key: 'dueDate', label: 'Due Date' },
-                  { key: 'amount', label: 'Amount' },
-                  { key: 'status', label: 'Status' },
+                  { key: 'invoiceNumber', label: 'INVOICE NUMBER' },
+                  { key: 'companyName', label: 'COMPANY NAME' },
+                  { key: 'contactName', label: 'CONTACT NAME' },
+                  { key: 'date', label: 'DATE' },
+                  { key: 'dueDate', label: 'DUE DATE' },
+                  { key: 'amount', label: 'AMOUNT' },
+                  { key: 'status', label: 'STATUS' },
                 ].map(({ key, label }) => (
                   <th
                     key={key}
@@ -171,7 +290,10 @@ const Invoices: React.FC<InvoicesProps> = ({ onViewActivity }) => {
                   </th>
                 ))}
                 <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: '#4285F4' }}>
-                  Actions
+                  AI SUGGESTION
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: '#4285F4' }}>
+                  ACTIONS
                 </th>
               </tr>
             </thead>
@@ -209,30 +331,34 @@ const Invoices: React.FC<InvoicesProps> = ({ onViewActivity }) => {
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <StatusBadge status={invoice.status} variant="invoice" />
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusPillColor(invoice.status)}`}>
+                      {invoice.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getAISuggestionPillColor(invoice.suggestionColor)}`}>
+                      {invoice.aiSuggestion}
+                    </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center space-x-3">
                       <button 
                         onClick={() => handleEditInvoice(invoice)}
-                        className="flex items-center text-sm font-medium transition-colors duration-200"
-                        style={{ color: '#4285F4' }}
+                        className="flex items-center text-sm font-medium transition-colors duration-200 text-gray-600 hover:text-gray-900"
                       >
                         <Edit className="w-4 h-4 mr-1" />
                         Edit
                       </button>
                       <button 
                         onClick={() => handleSendInvoice(invoice)}
-                        className="flex items-center text-sm font-medium transition-colors duration-200"
-                        style={{ color: '#4285F4', opacity: 0.8 }}
+                        className="flex items-center text-sm font-medium transition-colors duration-200 text-gray-600 hover:text-gray-900"
                       >
                         <Send className="w-4 h-4 mr-1" />
                         Send
                       </button>
                       <button 
                         onClick={() => onViewActivity(invoice)}
-                        className="text-sm font-medium transition-colors duration-200"
-                        style={{ color: '#4285F4', opacity: 0.8 }}
+                        className="text-sm font-medium transition-colors duration-200 text-gray-600 hover:text-gray-900"
                       >
                         View Activity
                       </button>
